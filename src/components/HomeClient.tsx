@@ -2,12 +2,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
-const HomeClient = ({ email }: { email: string }) => {
+const HomeClient = ({ email }: { email?: string }) => {
   const handleLogin = () => {
     window.location.href = "/api/auth/login";
   };
 
-  const firstLetter = email[0].toUpperCase();
+ const firstLetter = email?.[0]?.toUpperCase() || "";
 
   const [open, setOpen] = useState(false);
   const popupRef = useRef<HTMLDivElement>(null);
@@ -21,6 +21,25 @@ const HomeClient = ({ email }: { email: string }) => {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  const features = [
+    {
+      title: "Plug & Play",
+      desc: "Add the chatbot to your site with a single script tag.",
+
+    },
+    {
+      title: "Admin Controlled",
+      desc: "You control exactly what the AI knows and answers."
+
+    },
+    {
+      title: "Always Online",
+      desc: "Your customers get instant support 24/7."
+
+    },
+
+  ]
 
   return (
     <div className="min-h-screen bg-linear-to-br from-white to-zinc-50 text-zinc-900 overflow-x-hidden">
@@ -71,7 +90,129 @@ const HomeClient = ({ email }: { email: string }) => {
           )}
         </div>
       </motion.div>
-    </div>
+      <section className="pt-36 pb-28 px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+
+          {/* Left div */}
+          <motion.div className=""
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+
+            <h1 className="text-4xl md:text-5xl font-semiboid leading-tight">
+              AI Customer Support <br />
+              Built for Modern Websites
+
+            </h1>
+
+            <p className="mt-6 text-lg text-zinc-600 max-w-xl">
+              Add a powerful AI chatbot to your website in minutes.
+              Let your customers get instant answers using your own business knowledge.
+            </p>
+
+            <div className="mt-10 flex gap-4">
+
+              {email ? <button className="px-7 py-3 rounded-xl 
+                            bg-black text-white font-medium hover:bg-zinc-800
+                            transition disabled:opacity-60">Go to Dashboard</button>
+                :
+                <button className="px-7 py-3 rounded-xl 
+                            bg-black text-white font-medium hover:bg-zinc-800
+                            transition disabled:opacity-60"
+                  onClick={handleLogin}
+                >Get Started</button>
+              }
+
+              <a href='#feature' className="px-7 py-3 rounded-xl 
+                            border border-zinc-300
+                            text-zinc-700  hover:bg-zinc-100
+                            transition">Learn more
+              </a>
+            </div>
+          </motion.div>
+
+          {/* Right div */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{
+              opacity: 1, scale: 1
+            }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="relative">
+
+            <div className=" rounded-2xl bg-white shadow-2xl border border-zinc-200 p-6">
+              <div className="text-sm text-zinc-500 mb-3"> Live Chat Preview</div>
+              <div className="space-y-4">
+                {/* Sender Message*/}
+                <div className="bg-black text-white rounded-lg px-4 py-2 text-sm ml-auto w-fit "> Do you offer cash on delivery?</div>
+
+                {/* Ai message */}
+                <div className="bg-zinc-100 rounded-lg px-4 py-2 text-sm w-fit">Yes, Cash on delivery is available.</div>
+              </div>
+
+              <motion.div
+                animate={{ y: [0, -12, 0] }}
+                transition={{ repeat: Infinity, duration: 3 }}
+                className="
+                absolute -bottom-6 -right-6 w-14 h-14 rounded-full
+                bg-black text-white
+                flex items-center justify-center
+                shadow-xl
+                ">💬
+
+              </motion.div>
+
+            </div>
+
+          </motion.div>
+
+
+        </div>
+
+      </section >
+
+      {/* Feature Section */}
+      <section
+        id="feature"
+        className="bg-zinc-50 py-28 px-6 border-t border-zinc-200"
+      >
+
+        <div className=" max-w-6xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5 }}
+            className="'text-3xl font-semibold text-center">
+            Why Buisnesses Choose Assistify
+          </motion.h2>
+
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-10">
+            {features.map((f, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{ delay: idx * 0.1 }} //0.1
+                className=" bg-white rounded-2xl p-8 shadow-lg border border-zinc-200"
+              >
+                <h1 className="text-lg font-medium">{f.title}</h1>
+                <p className="mt-3 text-zinc-600 text-sm">{f.desc}</p>
+
+              </motion.div>
+
+            ))}
+          </div>
+
+
+        </div>
+      </section>
+      <footer className="py-10 text-center text-sm text-zinc-500">
+        &copy; {new Date().getFullYear()} Assistify. All rights reserved.
+      </footer>
+    </div >
   );
 };
 
