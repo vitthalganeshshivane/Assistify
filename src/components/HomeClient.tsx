@@ -1,8 +1,11 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const HomeClient = ({ email }: { email?: string }) => {
+  const navigate = useRouter();
   const handleLogin = () => {
     window.location.href = "/api/auth/login";
   };
@@ -41,6 +44,17 @@ const HomeClient = ({ email }: { email?: string }) => {
 
   ]
 
+  const handleLogout = async () => {
+    try {
+      const result = await axios.get("/api/auth/logout");
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+ 
+
   return (
     <div className="min-h-screen bg-linear-to-br from-white to-zinc-50 text-zinc-900 overflow-x-hidden">
       <motion.div
@@ -70,10 +84,10 @@ const HomeClient = ({ email }: { email?: string }) => {
                     exit={{ opacity: 0, y: -6 }}
                     className="absolute right-0 mt-3 w-44 bg-white rounded-xl shadow-xl border border-zinc-200 overflow-hidden"
                   >
-                    <button className="w-full text-left px-4 py-3 text-sm hover:bg-zinc-100">
+                    <button className="w-full text-left px-4 py-3 text-sm hover:bg-zinc-100" onClick={() => navigate.push("/dashboard")}>
                       Dashboard
                     </button>
-                    <button className="block px-4 py-3 text-sm text-red-600 hover:bg-zinc-100">
+                    <button className="block px-4 py-3 text-sm text-red-600 hover:bg-zinc-100" onClick={handleLogout}>
                       Logout
                     </button>
                   </motion.div>
@@ -100,7 +114,7 @@ const HomeClient = ({ email }: { email?: string }) => {
             transition={{ duration: 0.7 }}
           >
 
-            <h1 className="text-4xl md:text-5xl font-semiboid leading-tight">
+            <h1 className="text-4xl md:text-5xl font-boid leading-tight">
               AI Customer Support <br />
               Built for Modern Websites
 
@@ -115,7 +129,7 @@ const HomeClient = ({ email }: { email?: string }) => {
 
               {email ? <button className="px-7 py-3 rounded-xl 
                             bg-black text-white font-medium hover:bg-zinc-800
-                            transition disabled:opacity-60">Go to Dashboard</button>
+                            transition disabled:opacity-60" onClick={() => navigate.push("/dashboard")}>Go to Dashboard</button>
                 :
                 <button className="px-7 py-3 rounded-xl 
                             bg-black text-white font-medium hover:bg-zinc-800
