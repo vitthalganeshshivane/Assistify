@@ -12,18 +12,16 @@ const settingsSchema = new Schema<ISettings>(
     ownerId: {
       type: String,
       required: true,
+      unique:true,
     },
     businessName: {
       type: String,
-      required: true,
     },
     supportEmail: {
       type: String,
-      required: true,
     },
     knowledge: {
       type: String,
-      required: true,
     },
   },
   {
