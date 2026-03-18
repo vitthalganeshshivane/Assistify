@@ -33,3 +33,5 @@ const settingsSchema = new Schema<ISettings>(
 
 const Settings =
   mongoose.models.Settings || model<ISettings>("Settings", settingsSchema);
+
+export default Settings;
